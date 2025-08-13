@@ -1,0 +1,7 @@
+data_retention_days: 30
+debug: true
+environment: development
+max_concurrent_bots: 5
+name: Crypto Trading Bot System
+timezone: UTC
+version: 1.0.0

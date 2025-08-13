@@ -1,0 +1,20 @@
+default_strategy: RSI_EMA_ATR
+strategies:
+  RSI_EMA_ATR:
+    enabled: true
+    name: RSI + EMA + ATR Strategy
+    parameters:
+      atr_period: 14
+      atr_profit_multiplier: 2.0
+      atr_stop_multiplier: 1.5
+      ema_period: 200
+      overbought_threshold: 70
+      oversold_threshold: 30
+      rsi_period: 14
+  ZSCORE_PHI:
+    enabled: true
+    name: Z-Score Phi Strategy
+    parameters:
+      entry_threshold: 1.618
+      exit_threshold: 0.5
+      lookback: 21

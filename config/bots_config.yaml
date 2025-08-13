@@ -1,0 +1,5 @@
+auto_restart: true
+bot_check_interval: 60
+default_timeframe: 1h
+max_bots_per_symbol: 1
+performance_tracking: true

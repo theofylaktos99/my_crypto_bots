@@ -1,0 +1,26 @@
+# Python virtual environments
+venv/
+venv_new/
+zscore_env/
+__pycache__/
+
+# Streamlit Cloud/old logic
+old/
+backups/
+logs/
+
+# System files
+*.pyc
+*.pyo
+*.log
+.DS_Store
+.env
+.env.example
+
+# Data files
+*.csv
+*.html
+
+# IDE/Editor
+.vscode/
+.idea/

@@ -1,0 +1,10 @@
+api_timeout: 30
+default_exchange: binance
+exchanges:
+  binance:
+    api_url: https://api.binance.com
+    enabled: true
+    name: Binance
+    sandbox_url: https://testnet.binance.vision
+rate_limit: true
+sandbox_mode: true
