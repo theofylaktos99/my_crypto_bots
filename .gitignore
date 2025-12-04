@@ -17,10 +17,38 @@ logs/
 .env
 .env.example
 
+# Streamlit secrets (NEVER commit!)
+.streamlit/secrets.toml
+
 # Data files
 *.csv
 *.html
+data/
 
 # IDE/Editor
 .vscode/
 .idea/
+
+# Docker
+*.dockerignore
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Test coverage
+htmlcov/
+.coverage
+.pytest_cache/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/

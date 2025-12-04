@@ -1,0 +1,41 @@
+# Streamlit Configuration for CryptoBot Dashboard
+# This file configures the Streamlit app for optimal deployment
+
+[theme]
+# FLYNT-inspired color scheme
+primaryColor = "#187794"
+backgroundColor = "#0f1419"
+secondaryBackgroundColor = "#181818"
+textColor = "#d0d0d0"
+font = "sans serif"
+
+[server]
+# Server configuration
+headless = true
+enableCORS = false
+enableXsrfProtection = true
+maxUploadSize = 200
+port = 8501
+
+[browser]
+# Browser configuration
+gatherUsageStats = false
+serverAddress = "localhost"
+serverPort = 8501
+
+[runner]
+# Runner configuration
+magicEnabled = true
+installTracer = false
+fixMatplotlib = true
+fastReruns = true
+
+[client]
+# Client configuration
+showErrorDetails = true
+toolbarMode = "minimal"
+
+[logger]
+# Logging configuration
+level = "info"
+messageFormat = "%(asctime)s %(message)s"

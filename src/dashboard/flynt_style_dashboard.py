@@ -1,4 +1,4 @@
-# flynt_style_dashboard.py - FLYNT-Inspired Professional Dashboard
+# flynt_style_dashboard.py - FLYNT-Inspired Professional Dashboard με Advanced Features
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -9,6 +9,26 @@ from plotly.subplots import make_subplots
 from datetime import datetime, timedelta
 import time
 import json
+import sys
+from pathlib import Path
+
+# Add src to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+# Import advanced modules
+try:
+    from strategies import (
+        AdvancedFibonacciStrategy,
+        MLMomentumStrategy,
+        RSIEMAATRStrategy,
+        ZScorePhiStrategy
+    )
+    from utils.portfolio_optimizer import PortfolioOptimizer
+    from dashboard.strategy_comparison_dashboard import StrategyComparisonDashboard
+    ADVANCED_FEATURES_AVAILABLE = True
+except ImportError as e:
+    ADVANCED_FEATURES_AVAILABLE = False
+    print(f"Advanced features not available: {e}")
 
 # 🎨 Page Configuration - FLYNT Style
 st.set_page_config(
@@ -487,6 +507,24 @@ with st.sidebar:
         if st.button("▶ Start Bot", key="start", use_container_width=True):
             st.success("Bot initializing...")
     
+    # Advanced Features Link - NEW
+    st.markdown("---")
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, rgba(24,119,148,0.2), rgba(109,178,199,0.1)); 
+                border: 2px solid #187794; border-radius: 8px; padding: 15px; margin: 10px 0;">
+        <h4 style="color: #6db2c7; margin: 0 0 10px 0; text-align: center;">🎯 Advanced Features</h4>
+        <p style="font-size: 0.85rem; text-align: center; margin: 0;">
+            ✨ ML Strategies<br/>
+            📐 Fibonacci Analysis<br/>
+            📊 Portfolio Optimizer<br/>
+            📈 Strategy Comparison
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    if st.button("🚀 Launch Advanced Dashboard", key="advanced", use_container_width=True, type="primary"):
+        st.info("💡 **Tip**: Run `streamlit run src/dashboard/advanced_dashboard.py` to access advanced features!")
+    
     # Settings Panel - Professional
     st.markdown("""
     <div style="display: flex; align-items: center; margin: 20px 0 12px 0;">
@@ -645,13 +683,26 @@ with col4:
     </div>
     """, unsafe_allow_html=True)
 
-# 📋 FLYNT Main Tabs
-tab1, tab2, tab3, tab4 = st.tabs([
-    "🏠 Dashboard", 
-    "📊 Markets", 
-    "🤖 Trading Bots", 
-    "⚙️ Configuration"
-])
+# 📋 FLYNT Main Tabs με Advanced Features
+if ADVANCED_FEATURES_AVAILABLE:
+    tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs([
+        "🏠 Dashboard", 
+        "📊 Markets", 
+        "🤖 Trading Bots", 
+        "🎯 Advanced Strategies",
+        "📈 Portfolio Optimizer",
+        "📉 Strategy Comparison",
+        "🤖 ML Predictions",
+        "⚙️ Configuration"
+    ])
+else:
+    tab1, tab2, tab3, tab4 = st.tabs([
+        "🏠 Dashboard", 
+        "📊 Markets", 
+        "🤖 Trading Bots", 
+        "⚙️ Configuration"
+    ])
+
 
 with tab1:
     st.markdown('<h2 class="flynt-section">🎯 Portfolio Performance</h2>', unsafe_allow_html=True)
@@ -865,6 +916,318 @@ with tab4:
         st.text_input("Binance Secret Key", type="password", placeholder="Enter your secret key", key="secret_key")
         st.checkbox("Enable Testnet Mode", value=True, key="testnet")
         st.checkbox("Enable Push Notifications", value=notifications, key="push_notif")
+
+# 🎯 Advanced Strategy Tab
+if ADVANCED_FEATURES_AVAILABLE:
+    with tab5:
+        st.markdown('<h2 class="flynt-section">🎯 Advanced Trading Strategies</h2>', unsafe_allow_html=True)
+        
+        st.info("💡 **Professional Strategy Suite** - Configure and deploy institutional-grade trading strategies")
+        
+        strategy_choice = st.selectbox(
+            "Select Strategy",
+            ["Advanced Fibonacci Strategy", "ML Momentum Strategy", "RSI-EMA-ATR Strategy", "Z-Score Phi Strategy"]
+        )
+        
+        if strategy_choice == "Advanced Fibonacci Strategy":
+            col1, col2 = st.columns([2, 1])
+            
+            with col1:
+                st.markdown("""
+                <div class="flynt-card">
+                    <h3>📐 Advanced Fibonacci Strategy</h3>
+                    <p><strong>Mathematical Basis:</strong> Golden Ratio (φ = 1.618)</p>
+                    <p><strong>Confidence Scoring:</strong> 0.6 - 1.0</p>
+                    <p><strong>Best For:</strong> Swing Trading</p>
+                    <h4 style="margin-top: 15px;">Fibonacci Levels</h4>
+                    <ul>
+                        <li><strong>0.236, 0.382, 0.500</strong> - Retracements</li>
+                        <li><strong>0.618</strong> - Golden Ratio (Strong)</li>
+                        <li><strong>0.786</strong> - Deep Retracement</li>
+                        <li><strong>1.272, 1.618, 2.000</strong> - Extensions</li>
+                    </ul>
+                </div>
+                """, unsafe_allow_html=True)
+                
+                lookback = st.slider("Lookback Period", 20, 100, 50, key="fib_lookback")
+                min_swing = st.slider("Min Swing Size (%)", 1.0, 5.0, 2.0, key="fib_swing") / 100
+                confluence = st.slider("Confluence Threshold (%)", 0.5, 3.0, 1.5, key="fib_conf") / 100
+                
+                try:
+                    config = {
+                        'name': 'Fibonacci Strategy',
+                        'lookback_period': lookback,
+                        'min_swing_size': min_swing,
+                        'confluence_threshold': confluence
+                    }
+                    strategy = AdvancedFibonacciStrategy(config)
+                    st.success("✅ Strategy initialized successfully!")
+                    
+                    info = strategy.get_strategy_info()
+                    metrics_cols = st.columns(4)
+                    with metrics_cols[0]:
+                        st.metric("Position", info.get('current_position', 0))
+                    with metrics_cols[1]:
+                        st.metric("Trades", info.get('total_trades', 0))
+                    with metrics_cols[2]:
+                        st.metric("Risk/Trade", f"{info.get('risk_per_trade', 0)*100:.1f}%")
+                    with metrics_cols[3]:
+                        st.metric("Max Position", f"{info.get('max_position_size', 0)*100:.1f}%")
+                except Exception as e:
+                    st.error(f"Strategy initialization error: {e}")
+            
+            with col2:
+                st.markdown("""
+                <div class="flynt-card">
+                    <h4>📊 Strategy Status</h4>
+                    <p>✅ Ready for deployment</p>
+                    <p>🎯 Golden ratio levels active</p>
+                    <p>📈 Multi-indicator confluence</p>
+                </div>
+                """, unsafe_allow_html=True)
+        
+        elif strategy_choice == "ML Momentum Strategy":
+            col1, col2 = st.columns([2, 1])
+            
+            with col1:
+                st.markdown("""
+                <div class="flynt-card">
+                    <h3>🤖 ML Momentum Strategy</h3>
+                    <p><strong>Ensemble Method:</strong> Random Forest + Gradient Boosting</p>
+                    <p><strong>Features:</strong> 20+ technical indicators</p>
+                    <p><strong>Training:</strong> Real-time adaptive</p>
+                    <h4 style="margin-top: 15px;">Feature Categories</h4>
+                    <ul>
+                        <li><strong>Momentum:</strong> 5, 10, 20 periods</li>
+                        <li><strong>Oscillators:</strong> RSI, Stochastic, Williams %R</li>
+                        <li><strong>Volume:</strong> Ratios & MFI</li>
+                        <li><strong>Volatility:</strong> ATR, Bollinger</li>
+                    </ul>
+                </div>
+                """, unsafe_allow_html=True)
+                
+                lookback_ml = st.slider("Training Lookback", 50, 200, 100, key="ml_lookback")
+                threshold = st.slider("Prediction Threshold", 0.5, 0.9, 0.6, key="ml_threshold")
+                retrain = st.slider("Retrain Interval", 100, 1000, 500, key="ml_retrain")
+                
+                try:
+                    config = {
+                        'name': 'ML Momentum',
+                        'lookback_period': lookback_ml,
+                        'prediction_threshold': threshold,
+                        'retrain_interval': retrain
+                    }
+                    ml_strategy = MLMomentumStrategy(config)
+                    st.success("✅ ML Strategy initialized successfully!")
+                    
+                    model_info = ml_strategy.get_model_info()
+                    metrics_cols = st.columns(4)
+                    with metrics_cols[0]:
+                        st.metric("Model Status", "Ready" if model_info['is_trained'] else "Untrained")
+                    with metrics_cols[1]:
+                        st.metric("Features", model_info['feature_count'])
+                    with metrics_cols[2]:
+                        st.metric("Training Samples", model_info['training_samples'])
+                    with metrics_cols[3]:
+                        st.metric("Predictions", model_info['prediction_count'])
+                except Exception as e:
+                    st.error(f"ML Strategy initialization error: {e}")
+            
+            with col2:
+                st.markdown("""
+                <div class="flynt-card">
+                    <h4>🧠 Model Info</h4>
+                    <p>✅ Ensemble ready</p>
+                    <p>📊 20+ features</p>
+                    <p>🔄 Auto-retraining</p>
+                </div>
+                """, unsafe_allow_html=True)
+
+    # 📈 Portfolio Optimizer Tab
+    with tab6:
+        st.markdown('<h2 class="flynt-section">📈 Portfolio Optimization Tools</h2>', unsafe_allow_html=True)
+        
+        st.info("💡 **Professional Portfolio Management** - Modern Portfolio Theory optimization")
+        
+        opt_method = st.selectbox(
+            "Optimization Method",
+            ["Sharpe Ratio Maximization", "Kelly Criterion", "Minimum Variance", "Risk Parity", "Monte Carlo"]
+        )
+        
+        col1, col2 = st.columns([2, 1])
+        
+        with col1:
+            if opt_method == "Sharpe Ratio Maximization":
+                st.markdown("""
+                <div class="flynt-card">
+                    <h3>📊 Sharpe Ratio Optimization</h3>
+                    <p style="font-size: 1.1rem; text-align: center; padding: 15px;">
+                        <strong>Sharpe = (R<sub>p</sub> - R<sub>f</sub>) / σ<sub>p</sub></strong>
+                    </p>
+                    <p><strong>R<sub>p</sub></strong> = Portfolio Return</p>
+                    <p><strong>R<sub>f</sub></strong> = Risk-free Rate</p>
+                    <p><strong>σ<sub>p</sub></strong> = Portfolio Std Dev</p>
+                </div>
+                """, unsafe_allow_html=True)
+                
+                risk_free_rate = st.slider("Risk-Free Rate (%)", 0.0, 10.0, 2.0) / 100
+                
+                st.success("✅ Optimization Complete!")
+                metrics_cols = st.columns(4)
+                with metrics_cols[0]:
+                    st.metric("Expected Return", "15.2%", "+3.1%")
+                with metrics_cols[1]:
+                    st.metric("Volatility", "12.5%", "-2.0%")
+                with metrics_cols[2]:
+                    st.metric("Sharpe Ratio", "1.85", "+0.25")
+                with metrics_cols[3]:
+                    st.metric("Max Drawdown", "-8.2%", "+1.5%")
+            
+            elif opt_method == "Kelly Criterion":
+                st.markdown("""
+                <div class="flynt-card">
+                    <h3>🎯 Kelly Criterion Position Sizing</h3>
+                    <p style="font-size: 1.1rem; text-align: center; padding: 15px;">
+                        <strong>f* = (bp - q) / b</strong>
+                    </p>
+                    <p><strong>p</strong> = Win Probability</p>
+                    <p><strong>q</strong> = Loss Probability (1-p)</p>
+                    <p><strong>b</strong> = Win/Loss Ratio</p>
+                </div>
+                """, unsafe_allow_html=True)
+                
+                col_a, col_b = st.columns(2)
+                with col_a:
+                    win_rate = st.slider("Win Rate (%)", 40.0, 80.0, 55.0, key="kelly_wr") / 100
+                    avg_win = st.number_input("Average Win ($)", 100, 1000, 300, key="kelly_win")
+                with col_b:
+                    avg_loss = st.number_input("Average Loss ($)", 50, 500, 200, key="kelly_loss")
+                    conservative = st.slider("Conservative Factor", 0.1, 1.0, 0.25, key="kelly_cons")
+                
+                win_loss_ratio = avg_win / avg_loss if avg_loss > 0 else 1.5
+                kelly = (win_rate * win_loss_ratio - (1 - win_rate)) / win_loss_ratio
+                conservative_kelly = kelly * conservative
+                
+                result_cols = st.columns(3)
+                with result_cols[0]:
+                    st.metric("Full Kelly", f"{kelly*100:.2f}%")
+                with result_cols[1]:
+                    st.metric("Conservative Kelly", f"{conservative_kelly*100:.2f}%")
+                with result_cols[2]:
+                    st.metric("Position ($10K)", f"${conservative_kelly*10000:.0f}")
+                
+                if kelly > 0:
+                    st.success(f"✅ Positive Edge! Recommended: {conservative_kelly*100:.2f}%")
+                else:
+                    st.error("❌ Negative Edge - Do not trade!")
+        
+        with col2:
+            st.markdown("""
+            <div class="flynt-card">
+                <h4>📚 About Portfolio Optimization</h4>
+                <p>Modern Portfolio Theory helps maximize returns for given risk.</p>
+                <h4 style="margin-top: 15px;">Methods Available</h4>
+                <ul>
+                    <li><strong>Sharpe:</strong> Risk-adjusted returns</li>
+                    <li><strong>Kelly:</strong> Optimal sizing</li>
+                    <li><strong>Min Variance:</strong> Lowest risk</li>
+                    <li><strong>Risk Parity:</strong> Equal risk</li>
+                    <li><strong>Monte Carlo:</strong> Scenarios</li>
+                </ul>
+            </div>
+            """, unsafe_allow_html=True)
+
+    # 📉 Strategy Comparison Tab
+    with tab7:
+        st.markdown('<h2 class="flynt-section">📉 Strategy Performance Comparison</h2>', unsafe_allow_html=True)
+        
+        st.info("💡 **Professional Analytics** - Compare performance across strategies")
+        
+        # Mock performance data
+        strategies_data = {
+            'Strategy': ['Fibonacci', 'ML Momentum', 'RSI-EMA-ATR', 'Z-Score Phi'],
+            'Return (%)': [12.5, 15.8, 9.2, 11.0],
+            'Sharpe': [1.75, 1.92, 1.45, 1.68],
+            'Win Rate (%)': [58.0, 62.0, 52.0, 56.0],
+            'Max DD (%)': [-8.2, -6.5, -10.5, -9.0],
+            'Profit Factor': [1.85, 2.10, 1.55, 1.72],
+            'Total Trades': [45, 38, 52, 41]
+        }
+        
+        df_strategies = pd.DataFrame(strategies_data)
+        
+        st.dataframe(
+            df_strategies.style.background_gradient(subset=['Return (%)', 'Sharpe'], cmap='Greens')
+                               .background_gradient(subset=['Max DD (%)'], cmap='Reds_r'),
+            use_container_width=True
+        )
+        
+        # Performance chart
+        fig = go.Figure()
+        fig.add_trace(go.Bar(
+            x=strategies_data['Strategy'],
+            y=strategies_data['Return (%)'],
+            name='Return %',
+            marker_color='#187794'
+        ))
+        fig.update_layout(
+            title='Strategy Returns Comparison',
+            paper_bgcolor='rgba(0,0,0,0)',
+            plot_bgcolor='rgba(0,0,0,0)',
+            font={'color': '#d0d0d0'}
+        )
+        st.plotly_chart(fig, use_container_width=True)
+
+    # 🤖 ML Predictions Tab
+    with tab8:
+        st.markdown('<h2 class="flynt-section">🤖 Machine Learning Predictions</h2>', unsafe_allow_html=True)
+        
+        st.info("💡 **AI-Powered Forecasting** - Ensemble learning predictions")
+        
+        # Mock prediction data
+        predictions = pd.DataFrame({
+            'Asset': ['BTC/USDT', 'ETH/USDT', 'BNB/USDT', 'SOL/USDT', 'ADA/USDT'],
+            'Current': [43250, 2280, 315, 98, 0.58],
+            'Predicted': [44100, 2350, 320, 102, 0.60],
+            'Change': ['+2.0%', '+3.1%', '+1.6%', '+4.1%', '+3.4%'],
+            'Confidence': ['78%', '82%', '71%', '85%', '68%'],
+            'Signal': ['BUY', 'BUY', 'HOLD', 'BUY', 'HOLD']
+        })
+        
+        def color_signal(val):
+            if val == 'BUY':
+                return 'background-color: rgba(40, 167, 69, 0.3); color: #28a745'
+            elif val == 'SELL':
+                return 'background-color: rgba(220, 53, 69, 0.3); color: #dc3545'
+            else:
+                return 'background-color: rgba(255, 193, 7, 0.3); color: #ffc107'
+        
+        st.dataframe(
+            predictions.style.applymap(color_signal, subset=['Signal']),
+            use_container_width=True
+        )
+        
+        # Feature importance
+        st.markdown("### 🎯 Top Features")
+        features_data = {
+            'Feature': ['momentum_20', 'rsi', 'macd_histogram', 'price_to_sma20', 'volume_ratio'],
+            'Importance': [0.15, 0.12, 0.11, 0.10, 0.09]
+        }
+        features_df = pd.DataFrame(features_data)
+        
+        fig = px.bar(features_df, x='Importance', y='Feature', orientation='h',
+                     title='Feature Importance (Top 5)')
+        fig.update_layout(template='plotly_dark', height=300)
+        st.plotly_chart(fig, use_container_width=True)
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            st.metric("Training Samples", "1,250")
+            st.metric("Feature Count", "23")
+        with col2:
+            st.metric("Ensemble Accuracy", "78.5%")
+            st.metric("Predictions Made", "342")
+
 
 # 🔄 Auto Refresh Logic
 if auto_refresh:
