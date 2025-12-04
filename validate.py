@@ -174,8 +174,8 @@ def check_git_status():
                 not has_changes,
                 "Commit changes before deploying" if has_changes else ""
             )
-        except:
-            print_status("Git status check", False, "Could not check git status")
+        except (subprocess.CalledProcessError, FileNotFoundError, OSError) as e:
+            print_status("Git status check", False, f"Could not check git status: {e}")
             all_ok = False
     
     return all_ok
@@ -194,7 +194,7 @@ def check_docker():
         )
         print_status("Docker", True, result.stdout.strip())
         return True
-    except:
+    except (subprocess.CalledProcessError, FileNotFoundError, OSError):
         print_status("Docker", False, "Not installed (optional)")
         return False
 
