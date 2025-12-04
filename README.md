@@ -58,7 +58,11 @@ pip install -r requirements.txt
 ```
 
 ### 2. Configure Environment
-- Copy `.env.example` to `.env` and fill in your API keys and settings.
+- Copy `.env.example` to `.env` and fill in your API keys and settings:
+```bash
+cp .env.example .env
+# Edit .env with your favorite editor
+```
 
 ### 3. Launch the Dashboard
 ```bash
@@ -66,10 +70,14 @@ streamlit run src/dashboard/flynt_style_dashboard.py
 ```
 - Access at: http://localhost:8501
 
-### 4. (Optional) Deploy to Streamlit Cloud
-- Push your repo to GitHub
-- Go to [streamlit.io/cloud](https://streamlit.io/cloud)
-- Connect your repo and set `src/dashboard/flynt_style_dashboard.py` as the entry point
+### 4. Deploy to Cloud (Optional)
+For detailed deployment instructions, see **[DEPLOYMENT.md](DEPLOYMENT.md)**
+
+**Quick Deploy Options:**
+- 🟢 **Streamlit Cloud** (Recommended - Free): [share.streamlit.io](https://share.streamlit.io)
+- 🔵 **Heroku**: See [DEPLOYMENT.md](DEPLOYMENT.md#heroku-deployment)
+- 🚂 **Railway**: See [DEPLOYMENT.md](DEPLOYMENT.md#railway-deployment)
+- 🐳 **Docker**: See [DEPLOYMENT.md](DEPLOYMENT.md#docker-deployment)
 
 ---
 
@@ -110,6 +118,39 @@ See also `CURRENT_STRUCTURE.md` for a live snapshot.
 - Όλα τα API keys στο `.env` (ποτέ στο Git!)
 - Υποστήριξη testnet/mainnet
 - Risk management σε επίπεδο στρατηγικής και portfolio
+
+---
+
+## 🚀 DEPLOYMENT & CI/CD
+
+### Cloud Deployment Options
+
+The application is now ready for deployment to multiple cloud platforms:
+
+- **Streamlit Cloud**: Zero-config deployment with automatic updates
+- **Heroku**: Scalable PaaS with extensive add-ons
+- **Railway**: Modern platform with generous free tier
+- **Docker**: Container-based deployment for any platform
+
+See **[DEPLOYMENT.md](DEPLOYMENT.md)** for detailed instructions.
+
+### Continuous Integration
+
+GitHub Actions workflows are configured for:
+- ✅ Automated testing across Python 3.9, 3.10, 3.11
+- ✅ Code quality checks (flake8, black, pylint)
+- ✅ Security scanning (bandit, safety)
+- ✅ Code complexity analysis
+
+### Configuration Files
+
+- `.streamlit/config.toml` - Streamlit configuration
+- `.streamlit/secrets.toml.example` - Secrets template
+- `.env.example` - Environment variables template
+- `Dockerfile` - Docker container configuration
+- `docker-compose.yml` - Docker Compose orchestration
+- `Procfile` - Heroku deployment configuration
+- `.github/workflows/ci.yml` - CI/CD pipeline
 
 ---
 

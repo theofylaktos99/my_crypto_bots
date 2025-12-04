@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  cryptobot:
+    build: .
+    container_name: cryptobot-dashboard
+    ports:
+      - "8501:8501"
+    environment:
+      # Copy from .env or set here
+      - API_KEY=${API_KEY}
+      - SECRET_KEY=${SECRET_KEY}
+      - USE_TESTNET=${USE_TESTNET:-true}
+      - ENVIRONMENT=${ENVIRONMENT:-development}
+      - DEBUG_MODE=${DEBUG_MODE:-true}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - DEFAULT_SYMBOL=${DEFAULT_SYMBOL:-BTC/USDT}
+      - DEFAULT_TIMEFRAME=${DEFAULT_TIMEFRAME:-1h}
+    volumes:
+      # Mount volumes for persistent data
+      - ./logs:/app/logs
+      - ./config:/app/config
+      - ./data:/app/data
+      - ./backups:/app/backups
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - cryptobot-network
+
+networks:
+  cryptobot-network:
+    driver: bridge
+
+# Optional: Add a database service
+# Uncomment if you want to use PostgreSQL for data persistence
+#  db:
+#    image: postgres:15-alpine
+#    container_name: cryptobot-db
+#    environment:
+#      - POSTGRES_USER=cryptobot
+#      - POSTGRES_PASSWORD=cryptobot_password
+#      - POSTGRES_DB=cryptobot_db
+#    volumes:
+#      - postgres_data:/var/lib/postgresql/data
+#    networks:
+#      - cryptobot-network
+#    restart: unless-stopped
+
+#volumes:
+#  postgres_data:
