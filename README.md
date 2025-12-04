@@ -66,11 +66,24 @@ cp .env.example .env
 
 ### 3. Launch the Dashboard
 ```bash
+# Main Dashboard (Market Overview)
 streamlit run src/dashboard/flynt_style_dashboard.py
+
+# Advanced Dashboard (Strategies, ML, Portfolio Optimization) ⭐ NEW
+streamlit run src/dashboard/advanced_dashboard.py
 ```
 - Access at: http://localhost:8501
 
-### 4. Deploy to Cloud (Optional)
+### 4. Explore Advanced Features ⭐ NEW
+The **Advanced Dashboard** includes:
+- 🎯 **7 Trading Strategies** (Fibonacci, ML Momentum, RSI-EMA-ATR, Z-Score)
+- 📊 **Portfolio Optimizer** (Sharpe, Kelly Criterion, VaR, Monte Carlo)
+- 📈 **Strategy Comparison** (Performance analytics & metrics)
+- 🤖 **ML Predictions** (Ensemble learning with 20+ features)
+- 📐 **Fibonacci Analysis** (Golden ratio levels)
+- ⚙️ **Risk Management** (Position sizing, VaR calculations)
+
+### 5. Deploy to Cloud (Optional)
 For detailed deployment instructions, see **[DEPLOYMENT.md](DEPLOYMENT.md)**
 
 **Quick Deploy Options:**

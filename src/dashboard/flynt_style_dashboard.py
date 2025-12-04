@@ -487,6 +487,24 @@ with st.sidebar:
         if st.button("▶ Start Bot", key="start", use_container_width=True):
             st.success("Bot initializing...")
     
+    # Advanced Features Link - NEW
+    st.markdown("---")
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, rgba(24,119,148,0.2), rgba(109,178,199,0.1)); 
+                border: 2px solid #187794; border-radius: 8px; padding: 15px; margin: 10px 0;">
+        <h4 style="color: #6db2c7; margin: 0 0 10px 0; text-align: center;">🎯 Advanced Features</h4>
+        <p style="font-size: 0.85rem; text-align: center; margin: 0;">
+            ✨ ML Strategies<br/>
+            📐 Fibonacci Analysis<br/>
+            📊 Portfolio Optimizer<br/>
+            📈 Strategy Comparison
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    if st.button("🚀 Launch Advanced Dashboard", key="advanced", use_container_width=True, type="primary"):
+        st.info("💡 **Tip**: Run `streamlit run src/dashboard/advanced_dashboard.py` to access advanced features!")
+    
     # Settings Panel - Professional
     st.markdown("""
     <div style="display: flex; align-items: center; margin: 20px 0 12px 0;">
