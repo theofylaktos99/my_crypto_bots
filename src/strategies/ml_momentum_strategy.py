@@ -142,7 +142,7 @@ class MLMomentumStrategy(BaseStrategy):
             df['target'] = np.where(df['close'].shift(-5) > df['close'], 1, 0)
             
             # Fill NaN values
-            df = df.fillna(method='ffill').fillna(0)
+            df = df.ffill().fillna(0)
             
             return df
             
@@ -285,9 +285,9 @@ class MLMomentumStrategy(BaseStrategy):
                 logger.warning("Insufficient clean data for training")
                 return
             
-            # Split data for training (use most recent 70% for training)
+            # Split data for training (use recent 70% for training)
             split_idx = int(len(X) * 0.7)
-            X_train = X[-split_idx:]
+            X_train = X[-split_idx:]  # Last 70% (most recent data)
             y_train = y[-split_idx:]
             
             # Normalize features
