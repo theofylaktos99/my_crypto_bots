@@ -10,7 +10,7 @@ sys.path.insert(0, str(src_path))
 
 import logging
 from src.utils.logger import setup_logging
-from src.utils.config_manager import ConfigManager
+from src.utils.config_manager import SecurityConfig as ConfigManager
 from src.dashboard.main_dashboard import MainDashboard
 
 def main():

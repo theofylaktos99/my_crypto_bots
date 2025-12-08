@@ -4,7 +4,7 @@ import numpy as np
 from typing import Dict, Any
 import logging
 from .base_strategy import BaseStrategy
-from ..utils.technical_indicators import RSI, EMA, ATR
+from utils.technical_indicators import RSI, EMA, ATR
 
 logger = logging.getLogger(__name__)
 
@@ -75,7 +75,7 @@ class RSIEMAATRStrategy(BaseStrategy):
             )
             
             # Calculate volume moving average
-            from ..utils.technical_indicators import SMA
+            from utils.technical_indicators import SMA
             df['volume_ma'] = SMA(df['volume'], timeperiod=20)
             
             # Calculate additional trend indicators
