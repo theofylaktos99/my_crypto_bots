@@ -10,11 +10,11 @@ import asyncio
 import threading
 import time
 
-from ..utils.config_manager import ConfigManager
-from ..api.market_data import MarketDataFetcher
-from ..api.binance_client import BinanceClient
-from ..strategies.rsi_ema_atr_strategy import RSIEMAATRStrategy
-from ..bots.bot_manager import BotManager
+from utils.config_manager import SecurityConfig as ConfigManager
+from api.market_data import MarketDataFetcher
+from api.binance_client import BinanceClient
+from strategies.rsi_ema_atr_strategy import RSIEMAATRStrategy
+from bots.bot_manager import BotManager
 
 logger = logging.getLogger(__name__)
 

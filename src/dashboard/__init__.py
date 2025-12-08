@@ -1,7 +1,8 @@
 # Dashboard Module - Main Trading Dashboard
-__version__ = "1.0.0"
+__version__ = "2.1.0"
 
-from .main_dashboard import MainDashboard
+# Don't auto-import to avoid circular dependencies
+# Use: from dashboard.main_dashboard import MainDashboard
 
 __all__ = [
     'MainDashboard'
