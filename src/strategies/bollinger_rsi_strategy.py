@@ -4,8 +4,8 @@ import numpy as np
 from typing import Dict, Any, Optional
 import logging
 from .base_strategy import BaseStrategy, Signal
-from ..utils.technical_indicators import RSI, BBANDS
-from ..utils.logger import logger
+from utils.technical_indicators import RSI, BBANDS
+from utils.logger import logger
 
 class BollingerRSIStrategy(BaseStrategy):
     """

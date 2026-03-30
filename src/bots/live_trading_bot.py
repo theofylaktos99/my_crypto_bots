@@ -12,7 +12,7 @@ from .base_bot import BaseBot
 from ..api.market_data import MarketDataFetcher
 from ..api.binance_client import BinanceClient
 from ..strategies.base_strategy import BaseStrategy
-from ..utils.config_manager import ConfigManager
+from ..utils.config_manager import SecurityConfig as ConfigManager
 
 logger = logging.getLogger(__name__)
 

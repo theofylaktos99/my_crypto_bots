@@ -1237,7 +1237,7 @@ if auto_refresh:
 # 📱 FLYNT Footer
 st.markdown("""
 <div style="margin-top: 60px; padding: 30px 0; text-align: center; border-top: 1px solid var(--flynt-border); color: var(--flynt-content); font-family: 'Inter', sans-serif;">
-    <h4 style="color: var(--flynt-secondary); font-family: 'Arimo', sans-serif; font-weight: 700; margin-bottom: 12px;">💎 CryptoBot Professional</h4>
+    <h4 style="color: var(--flynt-secondary); font-family: 'Arimo', sans-serif; font-weight: 700; margin-bottom: 12px;">💎 CryptoBot Professional v2.1.0</h4>
     <p style="font-size: 0.875rem; margin: 4px 0;">FLYNT-Inspired Design | Advanced Trading Intelligence</p>
     <p style="font-size: 0.8rem; opacity: 0.7;">⚡ Real-time Data • 🔒 Secure Trading • 📊 Professional Analytics</p>
     <p style="font-size: 0.75rem; margin-top: 16px; opacity: 0.6;">© 2025 CryptoBot Pro | Built with Streamlit</p>

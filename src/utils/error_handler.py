@@ -7,6 +7,11 @@ import ccxt
 import json
 import os
 
+# Custom exception classes
+class ValidationError(Exception):
+    """Exception raised for data validation errors"""
+    pass
+
 class TradingBotErrorHandler:
     """Comprehensive error handling for crypto trading bots"""
     
